@@ -73,7 +73,7 @@ public class StratumBreakpointAdapterFactory implements IAdapterFactory, IToggle
 	private XbaseBreakpointUtil breakpointUtil;
 
 	@Override
-	@SuppressWarnings({ "rawtypes"})
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (adaptableObject instanceof XtextEditor) {
 			return this;
@@ -120,7 +120,7 @@ public class StratumBreakpointAdapterFactory implements IAdapterFactory, IToggle
 					result.lang = provider.get(LanguageInfo.class);
 					result.sourceUri = state.getURI();
 					if (editorInput.getAdapter(IClassFile.class) != null) {
-						result.classHandle = ((IClassFile)editorInput.getAdapter(IClassFile.class)).getHandleIdentifier();
+						result.classHandle = editorInput.getAdapter(IClassFile.class).getHandleIdentifier();
 					}
 					return result;
 				}

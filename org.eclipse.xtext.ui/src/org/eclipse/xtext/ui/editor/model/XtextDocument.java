@@ -97,7 +97,7 @@ public class XtextDocument extends Document implements IXtextDocument {
 	private XtextResource resource = null;
 	
 	private final List<IXtextModelListener> modelListeners = new ArrayList<IXtextModelListener>();
-	private final ListenerList xtextDocumentObservers = new ListenerList(ListenerList.IDENTITY);
+	private final ListenerList<IXtextDocumentContentObserver> xtextDocumentObservers = new ListenerList<>(ListenerList.IDENTITY);
 
 
 	public void setInput(XtextResource resource) {
@@ -247,10 +247,9 @@ public class XtextDocument extends Document implements IXtextDocument {
 	 * @noreference This method is not intended to be referenced by clients.
 	 */
 	protected boolean updateContentBeforeRead() {
-		Object[] listeners = xtextDocumentObservers.getListeners();
 		boolean hadUpdates = false;
-		for (int i = 0; i < listeners.length; i++) {
-			hadUpdates |= ((IXtextDocumentContentObserver) listeners[i]).performNecessaryUpdates(stateAccess);
+		for (IXtextDocumentContentObserver xtextDocumentObserver : xtextDocumentObservers) {
+			hadUpdates |= xtextDocumentObserver.performNecessaryUpdates(stateAccess);
 		}
 		return hadUpdates;
 	}
@@ -260,9 +259,8 @@ public class XtextDocument extends Document implements IXtextDocument {
 	 * @noreference This method is not intended to be referenced by clients.
 	 */
 	protected boolean hasPendingUpdates() {
-		Object[] listeners = xtextDocumentObservers.getListeners();
-		for (int i = 0; i < listeners.length; i++) {
-			if(((IXtextDocumentContentObserver) listeners[i]).hasPendingUpdates())
+		for (IXtextDocumentContentObserver xtextDocumentObserver : xtextDocumentObservers) {
+			if(xtextDocumentObserver.hasPendingUpdates())
 				return true;
 		}
 		return false;

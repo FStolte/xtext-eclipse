@@ -82,7 +82,7 @@ public class EditorUtils {
 		IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
 		if (activeEditor == null)
 			return null;
-		XtextEditor xtextEditor = (XtextEditor) activeEditor.getAdapter(XtextEditor.class);
+		XtextEditor xtextEditor = activeEditor.getAdapter(XtextEditor.class);
 		return xtextEditor;
 	}
 
@@ -97,13 +97,13 @@ public class EditorUtils {
 		IEditorPart activeEditor = activePage.getActiveEditor();
 		if (activeEditor == null)
 			return null;
-		XtextEditor xtextEditor = (XtextEditor) activeEditor.getAdapter(XtextEditor.class);
+		XtextEditor xtextEditor = activeEditor.getAdapter(XtextEditor.class);
 		return xtextEditor;
 	}
 
 	public static XtextEditor getXtextEditor(IEditorPart openEditor) {
 		if (openEditor != null) {
-			return (XtextEditor) openEditor.getAdapter(XtextEditor.class);
+			return openEditor.getAdapter(XtextEditor.class);
 		}
 		return null;
 	}

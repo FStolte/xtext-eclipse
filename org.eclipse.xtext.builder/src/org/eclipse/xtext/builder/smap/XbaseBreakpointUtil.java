@@ -53,9 +53,9 @@ public class XbaseBreakpointUtil {
 	}
 
 	public IResource getBreakpointResource(IEditorInput input) throws CoreException {
-		Object adapter = input.getAdapter(IResource.class);
+		IResource adapter = input.getAdapter(IResource.class);
 		if (adapter != null)
-			return (IResource) adapter;
+			return adapter;
 		if (input instanceof IStorageEditorInput) {
 			IStorage storage = ((IStorageEditorInput) input).getStorage();
 			if (storage instanceof IResource)
@@ -66,7 +66,7 @@ public class XbaseBreakpointUtil {
 					return underlyingResource;
 			}
 		} else if (input.getAdapter(IClassFile.class) != null) {
-			IClassFile classFile = (IClassFile) input.getAdapter(IClassFile.class);
+			IClassFile classFile = input.getAdapter(IClassFile.class);
 			return getBreakpointResource(classFile.findPrimaryType());
 		}
 		return ResourcesPlugin.getWorkspace().getRoot();
@@ -100,7 +100,7 @@ public class XbaseBreakpointUtil {
 				return null;
 			}
 		} else if (input.getAdapter(IClassFile.class) != null) {
-			IClassFile classFile = (IClassFile) input.getAdapter(IClassFile.class);
+			IClassFile classFile = input.getAdapter(IClassFile.class);
 			ITrace traceToSource = traceForTypeRootProvider.getTraceToSource(classFile);
 			if (traceToSource == null)
 				return null;

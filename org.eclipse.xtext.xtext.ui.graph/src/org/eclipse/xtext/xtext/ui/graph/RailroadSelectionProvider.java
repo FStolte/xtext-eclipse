@@ -44,7 +44,7 @@ public class RailroadSelectionProvider implements MouseListener, ISelectionProvi
 	@Inject
 	private RailroadView view;
 
-	private ListenerList selectionListeners = new ListenerList();
+	private ListenerList<ISelectionChangedListener> selectionListeners = new ListenerList<>();
 
 	private IFigure currentSelectedFigure;
 
@@ -101,8 +101,8 @@ public class RailroadSelectionProvider implements MouseListener, ISelectionProvi
 		}
 		SelectionChangedEvent event = isDoubleClick ? new DoubleClickEvent(this, selection)
 				: new SelectionChangedEvent(this, selection);
-		for (Object listener : selectionListeners.getListeners())
-			((ISelectionChangedListener) listener).selectionChanged(event);
+		for (ISelectionChangedListener listener : selectionListeners)
+			listener.selectionChanged(event);
 	}
 
 	@Override
